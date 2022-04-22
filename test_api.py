@@ -18,3 +18,19 @@ def test_get(client):
 def test_get_malformed(client):
     r = client.get("/bad_url")
     assert r.status_code != 200
+
+def test_below_50k(client):
+    r = client.post("/", json={
+        "age": 29,
+        "workclass": "Local-gov",
+        "education": "Some-college",
+        "maritalStatus": "Never-married",
+        "occupation": " Handlers-cleaners",
+        "relationship": "Own-child",
+        "race": "White",
+        "sex": "Male",
+        "hoursPerWeek": 40,
+        "nativeCountry": "United-States"
+    })
+    assert r.status_code == 200
+    assert r.json() == {"prediction": "<=50K"}
