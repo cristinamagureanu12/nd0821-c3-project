@@ -5,6 +5,7 @@ from ml.model import train_model
 from ml.data import process_data
 import numpy as np
 import pandas as pd
+from joblib import dump
 
 # Add code to load in the data.
 def clean_dataset(df : pd.DataFrame):
@@ -40,3 +41,7 @@ X_train, y_train, encoder, lb = process_data(
 
 # Train and save a model.
 model = train_model(X_train, y_train)
+
+dump(model, "model/model.joblib")
+dump(encoder, "model/encoder.joblib")
+dump(lb, "model/lb.joblib")
