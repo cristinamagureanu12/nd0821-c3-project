@@ -28,6 +28,6 @@ jobs:
       - name: Pull data from DVC
         run: dvc pull data -R
       - name: Run Flake8
-        run: flake8
+        run: flake8 --exclude main.py test_api.py
       - name: Run pytest
         run: pytest
