@@ -1,5 +1,4 @@
 # Script to train machine learning model.
-
 from sklearn.model_selection import train_test_split
 from ml.model import train_model
 from ml.data import process_data
@@ -39,9 +38,10 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 
+dump(lb, "model/lb.joblib")
+dump(encoder, "model/encoder.joblib")
+
 # Train and save a model.
 model = train_model(X_train, y_train)
 
 dump(model, "model/model.joblib")
-dump(encoder, "model/encoder.joblib")
-dump(lb, "model/lb.joblib")
