@@ -15,9 +15,6 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
         exit("dvc pull failed")    
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-app = FastAPI()
-
-
 class User(BaseModel):
     age: int
     workclass: Literal[
@@ -113,3 +110,5 @@ async def infer(user_data: User):
     pred = inference(model, X)
     y = lb.inverse_transform(pred)[0]
     return {"prediction": y}
+
+app = FastAPI()
