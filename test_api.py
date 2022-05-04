@@ -34,3 +34,20 @@ def test_below_50k(client):
     })
     assert r.status_code == 200
     assert r.json() == {"prediction": "<=50K"}
+
+
+def test_over_50k(client):
+    r = client.post("/", json={
+        "age": 49,
+        "workclass": "Private",
+        "education": "Bachelors",
+        "maritalStatus": "Married-civ-spouse",
+        "occupation": "Exec-managerial",
+        "relationship": "Own-child",
+        "race": "White",
+        "sex": "Male",
+        "hoursPerWeek": 40,
+        "nativeCountry": "United-States"
+    })
+    assert r.status_code == 200
+    assert r.json() == {"prediction": ">50K"}
