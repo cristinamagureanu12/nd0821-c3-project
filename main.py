@@ -6,6 +6,8 @@ from starter.ml.model import inference
 from starter.ml.data import process_data
 from typing import Literal
 from fastapi.testclient import TestClient
+from joblib import load
+import numpy as np
 
 app = FastAPI()
 
@@ -54,7 +56,7 @@ async def get_items():
 
 
 @app.post("/")
-async def inference(user_data: User):
+async def infer(user_data: User):
     model = load("model/model.joblib")
     encoder = load("model/encoder.joblib")
     lb = load("model/lb.joblib")
@@ -95,7 +97,6 @@ async def inference(user_data: User):
         "sex",
         "native-country",
     ]
-
     X, _, _, _ = process_data(
                 df_temp,
                 categorical_features=cat_features,

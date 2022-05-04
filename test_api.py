@@ -25,7 +25,7 @@ def test_below_50k(client):
         "workclass": "Local-gov",
         "education": "Some-college",
         "maritalStatus": "Never-married",
-        "occupation": " Handlers-cleaners",
+        "occupation": "Handlers-cleaners",
         "relationship": "Own-child",
         "race": "White",
         "sex": "Male",
