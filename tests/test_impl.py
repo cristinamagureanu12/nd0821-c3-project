@@ -1,12 +1,16 @@
-import pandas as pd
 import pytest
-from ml.model import train_model
-from ml.data import process_data
-from train_model import clean_data
+import pandas as pd
+import os
+import sys
+import numpy as np
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from starter.ml.model import train_model, inference
+from starter.ml.data import process_data, clean_dataset
+from joblib import load
 
 @pytest.fixture
 def data():
-    df = pd.read_csv("./data/initial/census.csv", skipinitialspace=True)
+    df = pd.read_csv("data/initial/census.csv", skipinitialspace=True)
     df = clean_dataset(df)
     return df
 
@@ -23,9 +27,9 @@ def test_null(data):
     assert data.shape == data.dropna().shape
 
 def test_inference1():
-    model = load("data/model/model.joblib")
-    encoder = load("data/model/encoder.joblib")
-    lb = load("data/model/lb.joblib")
+    model = load("model/model.joblib")
+    encoder = load("model/encoder.joblib")
+    lb = load("model/lb.joblib")
 
     array = np.array([[
                      40,
@@ -39,7 +43,7 @@ def test_inference1():
                      80,
                      "United-States"
                      ]])
-    df_temp = DataFrame(data=array, columns=[
+    df_temp = pd.DataFrame(data=array, columns=[
         "age",
         "workclass",
         "education",

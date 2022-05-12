@@ -57,17 +57,51 @@ class User(BaseModel):
         'Greece', 'Nicaragua', 'Vietnam', 'Hong', 'Ireland', 'Hungary',
         'Holand-Netherlands']
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "age": "23",
+                "workclass": "State-gov",
+                "education": "Bachelors",
+                "maritalStatus": "Never-married",
+                "occupation": "Adm-clerical",
+                "relationshio": "Not-in-family",
+                "race": "White",
+                "sex": "Male",
+                "hoursPerWeek": 0,
+                "nativeCountry": "United-States"
+            }
+        }
+
 
 @app.get("/")
 async def get_items():
     return {"message": "Greetings!"}
 
+items = {}
+@app.on_event("startup")
+async def startup_event():
+    items["model"] = load("model/model.joblib")
+    items["encoder"] = load("model/encoder.joblib")
+    items["lb"] = load("model/lb.joblib")
+
 
 @app.post("/")
 async def infer(user_data: User):
-    model = load("model/model.joblib")
-    encoder = load("model/encoder.joblib")
-    lb = load("model/lb.joblib")
+    if "model" not in items:
+        model = load("model/model.joblib")
+    else:
+        model = items["model"]
+
+    if "encoder" not in items:
+        encoder = load("model/encoder.joblib")
+    else:
+        encoder = items["encoder"]
+
+    if "lb" not in items:
+        lb = load("model/lb.joblib")
+    else:
+        lb = items["lb"]
 
     array = np.array([[
                      user_data.age,
