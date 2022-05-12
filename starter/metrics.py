@@ -1,8 +1,8 @@
 import pandas as pd
 from joblib import load
 from sklearn.model_selection import train_test_split
-from starter.ml.data import process_data
-from starter.ml.model import compute_model_metrics
+from ml.data import process_data
+from ml.model import compute_model_metrics
 
 cat_features = [    
     "workclass",    
@@ -15,7 +15,7 @@ cat_features = [
     "native-country",    
 ]
 
-def model_metrics(model, encoder, lb, df):
+def model_metrics(trained_model, encoder, lb, df):
 
     _, test = train_test_split(df, test_size=0.20)
     slices = []
@@ -43,9 +43,9 @@ def model_metrics(model, encoder, lb, df):
             out.write(slice_value + '\n')
 
 
-trained_model = load("model/model.joblib")
-encoder = load("model/encoder.joblib")
-lb = load("model/lb.joblib")
-df = pd.read_csv("data/cleaned/census.csv")
+#trained_model = load("model/model.joblib")
+#encoder = load("model/encoder.joblib")
+#lb = load("model/lb.joblib")
+#df = pd.read_csv("data/cleaned/census.csv")
 
-model_metrics(trained_model, encoder, lb, df)
+#model_metrics(trained_model, encoder, lb, df)

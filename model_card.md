@@ -22,6 +22,10 @@ Dataset source: https://archive.ics.uci.edu/ml/datasets/census+income. We use 20
 
 We report around 0.78 accuracy.
 
+precision: 0.64
+recall: 0.47
+fbeta\_scoree: 0.54
+
 ## Ethical Considerations
 
 Dataset contains data related race, gender and origin country. This will drive to a model that may potentially discriminate people;

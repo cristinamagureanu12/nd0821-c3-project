@@ -1,7 +1,9 @@
 # Script to train machine learning model.
 from sklearn.model_selection import train_test_split
-from ml.model import train_model
+from ml.model import train_model,compute_model_metrics
 from ml.data import process_data
+from ml.model import inference
+from metrics import model_metrics
 import numpy as np
 import pandas as pd
 from joblib import dump
@@ -44,4 +46,18 @@ dump(encoder, "model/encoder.joblib")
 # Train and save a model.
 model = train_model(X_train, y_train)
 
+X, y_test, _, _ = process_data(
+    test,
+    categorical_features=cat_features,    
+    encoder=encoder, label="salary", training=False, lb=lb)
+
+pred = inference(model, X)
+precision, recall, fbeta = compute_model_metrics(y_test, pred)
+
+print('precision:', precision)
+print('recall', recall)
+print('fbeta_scoree', fbeta)
+
 dump(model, "model/model.joblib")
+
+model_metrics(model, encoder, lb, test)
